@@ -1,4 +1,4 @@
-import { Entity, PrimaryColumn, PrimaryGeneratedColumn } from "typeorm";
+import { Column, Entity, PrimaryColumn, PrimaryGeneratedColumn } from "typeorm";
 
 @Entity()
 export class User {
@@ -8,4 +8,15 @@ export class User {
     @PrimaryColumn()
     googleId: string;
 
+    @PrimaryColumn()
+    email: string;
+
+    @Column()
+    name: string;
+
+    @Column()
+    email_receive: boolean;
+
+    @Column()
+    refresh_token: string;
 }
