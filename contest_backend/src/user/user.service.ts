@@ -29,7 +29,7 @@ export class UserService {
         return result
     }
 
-    async createUser(google_id: string, email: string) {
+    async createUser(google_id: string, email: string, name: string) {
         const user = await this.entityManager.getRepository('user')
 
         if (await this.findUserByGoogleId(google_id)) {
@@ -42,7 +42,8 @@ export class UserService {
 
         const result = await user.save({
             googleId: google_id,
-            email: email
+            email: email,
+            name: name
         })
 
         return result
