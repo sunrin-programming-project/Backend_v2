@@ -6,12 +6,12 @@ import { UserService } from 'src/user/user.service';
 export class AuthService {
     constructor(
         private readonly userService: UserService,
-        private readonly jwtServiceL: JwtService
+        private readonly jwtService: JwtService
     ) {}
 
     async getJWT(googleId: string, email: string, name: string) {
         const payload = { google_id: googleId, email: email, name: name }
-        return this.jwtServiceL.sign(payload)
+        return this.jwtService.sign(payload)
     }
 
     async googleValidate(googleId: string, email: string, name: string) {
@@ -24,8 +24,16 @@ export class AuthService {
         return this.getJWT(googleId, email, name)
     }
 
-    async generateRefreshToken(googleId: string, email: string, name: string) {
-        return this.getJWT(googleId, email, name)
-    }
+    async generateAccessToken(googleId: string, email: string, name: string) {
+        const payload = {
+            google_id: googleId,
+            email: email,
+            name: name
+        }
 
+        return this.jwtService.sign(payload, {
+            secret: process.env.JWT_SECRET,
+            expiresIn: '1h'
+        })
+    }
 }
